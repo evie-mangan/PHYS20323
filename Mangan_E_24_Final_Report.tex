@@ -1,0 +1,115 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Final Project}
+\author{Evie Mangan\\ %replace with your name
+Scientific Analysis and Modeling}
+
+\maketitle
+
+\noindent For this assignment, I was given Figure 1 and the following tasks: 
+
+\begin{enumerate} %the first video is required (but you don't have to watch it first), you can choose the other 4 from the list on the Course Materials page
+\item Write a program that properly models the decay of 20,000 atoms over
+sufficient “time” to enable all atoms to decay to the final state, and plot the number of atoms of each isotope over time.  
+\item Use your program to calculate the number and energy generated from
+each of the four types of decay processes ($\alpha$, $\beta$ , R, Z) in this radioactive
+decay chain.
+\item What it the average and standard deviation of the total and individual decay energies produced with this radioactive decay chain (minimum 10 runs)?
+\item As $\alpha$-particle decay is very harmful to humans, how thick (cm) of a shield would be needed to safety block ALL $\alpha$-particle decay energy, if each 1 cm blocks 1,250 MeV? (take into account your average and standard deviation from (3)) ALL assumes you block up to 3-sigma deviation of average energy.
+\end{enumerate}
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=0.3\linewidth]{radioactive decay chain.png}
+    \caption{Radioactive Decay Chain}
+    \label{fig:enter-label}
+\end{figure}
+
+\noindent  To begin, I pulled code from a previous assignment in which I modeled a much simpler radioactive decay chain. From there, I modified the code to account for the 7 elements, their half-lives, the percentages of decay products, and the decay types (all shown in Figure 1). Below, I have included the quantitative results from my code as well as two figures (Figures 2 and 3) that model 1.the number of atoms of the 7 elements versus time and 2.the amount of $\alpha$, $\beta$, R, and Z decays versus time.
+
+\begin{enumerate} 
+\item After modeling the radioactive decay chain, I obtained the following plot (Figure 2). This figure shows Astatine 219 in purple, Bismuth 215 in dark blue, Radon 219 in red, Lead 211 in green, Bismuth 211 in yellow, Thallium 207 in light blue, and Lead 207 in black. We can clearly see that the graph is dominated by the growth of Lead 207 and the decay of Astatine 219. The variety in decay rates comes from the differences in half-lives, which in turn affect the probability of decay. For timing, I ran the code until I saw that the number of Lead 207 atoms reached 20,000, indicating that the decay chain was complete. This ended up needing a time of about 27000 seconds; I used a value of t = 30000 just to ensure that all atoms had enough time to fully decay.  The graph shows us something interesting about Radon 219. It appears to never raise above a few atoms. If we look at the half-life of Rn 219, it decays almost immediately (4 minutes), so what we see in the graph makes quantitative sense.  We can use similar reasoning to analyze the graphs of the six other elements.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=0.6\linewidth]{radioactive decay-figure 2.png}
+    \caption{Radioactive Decay Chain (Time vs Number of Atoms)}
+    \label{fig:enter-label}
+\end{figure}
+
+\item To calculate the energies produced by the four different decay types, I used the respective energy values of the $\alpha$, $\beta$, R, and Z decay types as well as the decay arrows and decay product percentages in Figure 1 to track which decay type occurs at each step and how much energy is produced. Using the same parameters (20000 At 219 atoms to begin with and a run time of t = 30000), I was able to attain the following values: \\
+\begin{table} [h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Type of Decay & Amount of Energy & Total Decays & Total Energy Produced\\ \hline
+        $\alpha$ Decay & 4 MeV & 39354 atoms & 157416 MeV\\ \hline
+        $\beta$ Decay & 1 MeV & 200581 atoms & 200581 MeV\\ \hline
+        R Decay & 3 MeV & 646 atoms & 1938 MeV\\ \hline
+        Z Decay & 7 MeV & 19419 atoms & 135933 MeV\\ \hline
+    \end{tabular}
+    \caption{Decay Energies and Totals}
+    \label{tab:my_label}
+\end{table}
+
+\item Next, I calculated the mean and standard deviation of the decay energies of both the individual elements as well as the total energy produced from the decay chain. TO ensure we got reliable data, I looped the decay chain ten times, stored the data points, and then calculated the mean and standard deviation of those data sets. The results are as follows:
+
+\begin{table} [h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Decay Type & Mean & Standard Deviation \\ \hline
+        $\alpha$ Decay & 156356 MeV & 116 \\ \hline
+        $\beta$ Decay & 40165 MeV & 31 \\ \hline
+        R Decay & 1963 MeV & 79 \\ \hline
+        Z Decay & 135506 MeV & 165 \\ \hline
+        Total & 333989 MeV & 190 \\ \hline
+    \end{tabular}
+    \caption{Mean and Standard Deviation of Energy Values}
+    \label{tab:my_label}
+\end{table}
+
+\item Finally, to determine the shield thickness required to block all alpha decay energy I used the values in Table 2 of the mean and standard deviation of alpha decay energy. I started with a thickness of 1cm and added centimeter until the shield thickness blocked an energy of $126356+(116\times3)$. This calculation ensures $ 99.7 \% $ of the alpha decay energy is blocked by the shield. This gave a shield thickness of 126cm. 
+
+\end{enumerate}
+
+
+ 
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+ 
+\end{document}
